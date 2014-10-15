@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>[napalm]:WebDevil</id>
+	<name>WebDevil</name>
+	<version>1.0</version>
+	<type>modification</type>
+
+	<!-- Install actions -->
+
+	<install for="2.0.99 - 2.1.99">
+		<!-- Read me -->
+		<readme type="inline">This will install WebDevil Portal for SMF 2.1.</readme>
+
+		<!-- Modifications -->
+		<modification>smf2.1/install.xml</modification>
+
+		<!-- Source files -->
+		<require-file name="smf2.1/PortalStandalone.php" destination="$boarddir" />
+		<require-file name="smf2.1/Sources/PortalArticles.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalBlocks.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalHooks.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalMain.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalPages.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalShoutbox.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalAdminArticles.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalAdminBlocks.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalAdminMain.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalAdminPages.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/PortalAdminShoutbox.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/Subs-Portal.php" destination="$sourcedir" />
+		<require-file name="smf2.1/Sources/Subs-PortalAdmin.php" destination="$sourcedir" />
+
+		<!-- Theme files -->
+		<require-file name="smf2.1/Themes/default/Portal.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalArticles.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalPages.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalShoutbox.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalAdmin.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalAdminArticles.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalAdminBlocks.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalAdminPages.template.php" destination="$themedir" />
+		<require-file name="smf2.1/Themes/default/PortalAdminShoutbox.template.php" destination="$themedir" />
+
+		<!-- Language files -->
+		<require-file name="smf2.1/Themes/default/languages/SPortal.english.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortal.english-utf8.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalAdmin.english.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalAdmin.english-utf8.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalHelp.english.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalHelp.english-utf8.php" destination="$languagedir" />
+
+		<!-- Image files -->
+		<require-dir name="smf2.1/Themes/default/images/sp" destination="$imagesdir" />
+		<require-dir name="smf2.1/Themes/default/images/admin" destination="$imagesdir" />
+		<require-dir name="smf2.1/Themes/default/images/sp_shoutbox" destination="$imagesdir" />
+
+		<!-- CSS files -->
+		<require-file name="smf2.1/Themes/default/css/portal.css" destination="$themedir/css" />
+		<require-file name="smf2.1/Themes/default/css/portal_rtl.css" destination="$themedir/css" />
+
+		<!-- JavaScript files -->
+		<require-file name="smf2.1/Themes/default/scripts/portal.js" destination="$themedir/scripts" />
+
+		<!-- Install scripts -->
+		<database>smf2.1/install.php</database>
+
+		<redirect url="$scripturl?action=admin;area=portalconfig" timeout="5000">redirect.txt</redirect>
+	</install>
+
+	<!-- Uninstall actions -->
+
+	<uninstall for="2.0.99 - 2.1.99">
+		<!-- Read me -->
+		<readme type="inline">This will uninstall SimplePortal 2.3.6 for SMF 2.0.</readme>
+
+		<!-- Modifications -->
+		<modification reverse="true">smf2.1/install.xml</modification>
+
+		<!-- Source files -->
+		<remove-file name="$boarddir/PortalStandalone.php" />
+		<remove-file name="$sourcedir/PortalArticles.php" />
+		<remove-file name="$sourcedir/PortalBlocks.php" />
+		<remove-file name="$sourcedir/PortalHooks.php" />
+		<remove-file name="$sourcedir/PortalMain.php" />
+		<remove-file name="$sourcedir/PortalPages.php" />
+		<remove-file name="$sourcedir/PortalShoutbox.php" />
+		<remove-file name="$sourcedir/PortalAdminArticles.php" />
+		<remove-file name="$sourcedir/PortalAdminBlocks.php" />
+		<remove-file name="$sourcedir/PortalAdminMain.php" />
+		<remove-file name="$sourcedir/PortalAdminPages.php" />
+		<remove-file name="$sourcedir/PortalAdminShoutbox.php" />
+		<remove-file name="$sourcedir/Subs-Portal.php" />
+		<remove-file name="$sourcedir/Subs-PortalAdmin.php" />
+
+		<!-- Theme files -->
+		<remove-file name="$themedir/Portal.template.php" />
+		<remove-file name="$themedir/PortalArticles.template.php" />
+		<remove-file name="$themedir/PortalPages.template.php" />
+		<remove-file name="$themedir/PortalShoutbox.template.php" />
+		<remove-file name="$themedir/PortalAdmin.template.php" />
+		<remove-file name="$themedir/PortalAdminArticles.template.php" />
+		<remove-file name="$themedir/PortalAdminBlocks.template.php" />
+		<remove-file name="$themedir/PortalAdminPages.template.php" />
+		<remove-file name="$themedir/PortalAdminShoutbox.template.php" />
+
+		<!-- Language files -->
+		<remove-file name="$languagedir/SPortal.english.php" />
+		<remove-file name="$languagedir/SPortal.english-utf8.php" />
+		<remove-file name="$languagedir/SPortalAdmin.english.php" />
+		<remove-file name="$languagedir/SPortalAdmin.english-utf8.php" />
+		<remove-file name="$languagedir/SPortalHelp.english.php" />
+		<remove-file name="$languagedir/SPortalHelp.english-utf8.php" />
+
+		<!-- Image files -->
+		<remove-dir name="$imagesdir/sp" />
+		<remove-dir error="skip" name="$imagesdir/sp_shoutbox" />
+		<remove-file name="$imagesdir/admin/configuration.png" />
+		<remove-file name="$imagesdir/admin/blocks.png" />
+		<remove-file name="$imagesdir/admin/articles.png" />
+		<remove-file name="$imagesdir/admin/pages.png" />
+		<remove-file name="$imagesdir/admin/shoutbox.png" />
+		<remove-file error="skip" name="$imagesdir/admin/big/configuration.png" />
+		<remove-file error="skip" name="$imagesdir/admin/big/blocks.png" />
+		<remove-file error="skip" name="$imagesdir/admin/big/articles.png" />
+		<remove-file error="skip" name="$imagesdir/admin/big/pages.png" />
+		<remove-file error="skip" name="$imagesdir/admin/big/shoutbox.png" />
+
+		<!-- CSS files -->
+		<remove-file name="$themedir/css/portal.css" />
+		<remove-file name="$themedir/css/portal_rtl.css" />
+
+		<!-- JavaScript files -->
+		<remove-file name="$themedir/scripts/portal.js" />
+
+		<!-- Remove permission hook -->
+		<code>smf2.1/uninstall.php</code>
+	</uninstall>
+
+</package-info>
