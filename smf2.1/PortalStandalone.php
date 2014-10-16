@@ -10,10 +10,10 @@
  * WebDevil Portal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
-
+/*
 	This file here, unbelievably, has your portal within.
 
-	In order to use WebDevil in standalone mode:
+	In order to use SimplePortal in standalone mode:
 		+ Go to "SPortal Admin" >> "Configuration" >> "General Settings"
 		+ Select "Standalone" mode as "Portal Mode"
 		+ Set "Standalone URL" as the full url of this file.
@@ -26,7 +26,7 @@
 global $sp_standalone;
 
 // Should be the full path!
-$forum_dir = 'full/path/to/forum';
+$forum_dir = 'C:\xampp\htdocs\SMF2.1-5';
 
 // Let them know the mode.
 $sp_standalone = true;

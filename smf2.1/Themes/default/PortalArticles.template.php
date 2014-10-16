@@ -32,7 +32,7 @@ function template_articles_core()
 
 		if (!empty($modSettings['articleavatar']) && $article['poster']['avatar']['name'] !== null && !empty($article['poster']['avatar']['href']))
 			echo '
-									<a href="', $scripturl, '?action=profile;u=', $article['poster']['id'], '"><img src="', $article['poster']['avatar']['href'], '" alt="', $article['poster']['name'], '" width="30" style="float: right;" /></a>
+									<a href="', $scripturl, '?action=profile;u=', $article['poster']['id'], '"><img src="', $article['poster']['avatar']['href'], '" alt="', $article['poster']['name'], '" style="width: 30px;float: right;" /></a>
 									<div class="middletext">', $article['message']['time'], ' ', $txt['by'], ' ', $article['poster']['link'], '<br />', $txt['sp-articlesViews'], ': ', $article['topic']['views'], ' | ', $txt['sp-articlesComments'], ': ', $article['topic']['replies'], '</div>';
 		else
 			echo '
@@ -78,7 +78,7 @@ function template_articles_curve()
 
 		if (!empty($modSettings['articleavatar']) && $article['poster']['avatar']['name'] !== null && !empty($article['poster']['avatar']['href']))
 			echo '
-									<a href="', $scripturl, '?action=profile;u=', $article['poster']['id'], '"><img src="', $article['poster']['avatar']['href'], '" alt="', $article['poster']['name'], '" width="30" class="sp_float_right" /></a>
+									<a href="', $scripturl, '?action=profile;u=', $article['poster']['id'], '"><img src="', $article['poster']['avatar']['href'], '" alt="', $article['poster']['name'], '" style="width: 30px;" class="sp_float_right" /></a>
 									<div class="middletext">', $article['message']['time'], ' ', $txt['by'], ' ', $article['poster']['link'], '<br />', $txt['sp-articlesViews'], ': ', $article['topic']['views'], ' | ', $txt['sp-articlesComments'], ': ', $article['topic']['replies'], '</div>';
 		else
 			echo '
@@ -112,7 +112,7 @@ function template_add_article_core()
 	global $context, $scripturl, $txt;
 
 	echo '<br />
-	<table border="0" align="center" cellspacing="1" cellpadding="4" class="tborder" width="40%">
+	<table border="0" align="center" cellspacing="1" cellpadding="4" class="tborder" style="width: 40%;">
 		<tr class="catbg">
 			<td>', $txt['sp-articlesAdd'], '</td>
 		</tr>

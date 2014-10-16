@@ -41,7 +41,7 @@ function template_portal_above()
 	if (!empty($modSettings['showleft']) && !empty($context['SPortal']['blocks'][1]))
 	{
 		echo '
-			<td id="sp_left"', !empty($modSettings['leftwidth']) ? ' width="' . $modSettings['leftwidth'] . '"' : '', $context['SPortal']['sides'][1]['collapsed'] && empty($modSettings['sp_disable_side_collapse']) ? ' style="display: none;"' : '', '>';
+			<td id="sp_left"', $context['SPortal']['sides'][1]['collapsed'] && empty($modSettings['sp_disable_side_collapse']) ? ' style="display: none;"' : (!empty($modSettings['leftwidth']) ? ' style="width: ' . $modSettings['leftwidth'] . 'px;"' : ''), '>';
 
 		foreach ($context['SPortal']['blocks'][1] as $block)
 			template_block($block);
@@ -84,7 +84,7 @@ function template_portal_below()
 	if (!empty($modSettings['showright']) && !empty($context['SPortal']['blocks'][4]))
 	{
 		echo '
-			<td id="sp_right"', !empty($modSettings['rightwidth']) ? ' width="' . $modSettings['rightwidth'] . '"' : '', $context['SPortal']['sides'][4]['collapsed'] && empty($modSettings['sp_disable_side_collapse']) ? ' style="display: none;"' : '', '>';
+			<td id="sp_right"', $context['SPortal']['sides'][4]['collapsed'] && empty($modSettings['sp_disable_side_collapse']) ? ' style="display: none;"' : (!empty($modSettings['rightwidth']) ? ' style="width: ' . $modSettings['rightwidth'] . 'px;"' : ''), '>';
 
 		foreach ($context['SPortal']['blocks'][4] as $block)
 			template_block($block);
