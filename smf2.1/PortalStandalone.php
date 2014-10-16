@@ -26,7 +26,7 @@
 global $sp_standalone;
 
 // Should be the full path!
-$forum_dir = 'C:\xampp\htdocs\SMF2.1-5';
+$forum_dir = 'full/path/to/forum';
 
 // Let them know the mode.
 $sp_standalone = true;
