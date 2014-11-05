@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:WebDevil</id>
-	<name>WebDevil</name>
+	<id>napalm:EhPortal</id>
+	<name>EhPortal</name>
 	<version>1.0</version>
 */
 /*
- * WebDevil is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
+ * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * WebDevil Portal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -76,6 +76,12 @@ if (!defined('SMF'))
 		// !!!
 
 	void sportal_load_compat()
+		// !!!
+
+	void sp_smf_version()
+		// !!!
+
+	void sp_theme_copyright()
 		// !!!
 */
 
@@ -693,20 +699,20 @@ function sp_query_string($tourniquet)
 {
 	global $sportal_version, $context, $modSettings;
 
-	$fix = str_replace('{version}', $sportal_version, '<a href="http://www.web-develop.ca/" target="_blank" class="new_win">WebDevil Portal {version} &copy; 2014, WebDev</a>');
+	$fix = str_replace('{version}', $sportal_version, '<a href="http://www.web-develop.ca/" target="_blank" class="new_win">EhPortal {version} &copy; 2014, WebDev</a>');
 
 	if ((SMF == 'SSI' && empty($context['standalone'])) || empty($context['template_layers']) || WIRELESS || empty($modSettings['sp_portal_mode']) || strpos($tourniquet, $fix) !== false)
 		return $tourniquet;
 
 	$finds = array(
 		', Simple Machines LLC</a>',
-		', <a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a>',
+		'<span class="smalltext" style="display: inline; visibility: visible; font-family: Verdana, Arial, sans-serif;">',
 		'class="copywrite"',
 		'class="copyright"',
 	);
 	$replaces = array(
 		', Simple Machines LLC</a><br />' . $fix,
-		', <a href="http://www.simplemachines.org" title="Simple Machines" target="_blank" class="new_win">Simple Machines</a><br />' . $fix,
+		'<span class="smalltext" style="display: inline; visibility: visible; font-family: Verdana, Arial, sans-serif;">' . $fix . '<br />',
 		'class="copywrite" style="line-height: 1em;"',
 		'class="copyright" style="line-height: 1.5em;"',
 	);
@@ -715,8 +721,13 @@ function sp_query_string($tourniquet)
 
 	if (strpos($tourniquet, $fix) === false)
 	{
-		$fix = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">' . $fix . '</div></body></html>';
-		$tourniquet = preg_replace('~</body>\s*</html>~', $fix, $tourniquet);
+		if (strpos($tourniquet, '<li class="copyright" style="line-height: 1.5em;"></li>') !== false)
+			$tourniquet = str_replace('<li class="copyright" style="line-height: 1.5em;">', '<li class="copyright" style="line-height: 1.5em;">' . $fix . sp_theme_copyright(), $tourniquet);
+		else
+		{
+			$fix = '<div style="text-align: center; width: 100%; font-size: x-small; margin-bottom: 5px;">' . $fix . '</div></body></html>';
+			$tourniquet = preg_replace('~</body>\s*</html>~', $fix, $tourniquet);
+		}
 	}
 
 	return $tourniquet;
@@ -1410,5 +1421,21 @@ function sp_smf_version()
 {
 	global $context, $modSettings;
 	$context['SPortal']['image_type'] = version_compare((!empty($modSettings['smfVersion']) ? substr($modSettings['smfVersion'], 0, 3) : '2.0'), '2.1', '<') ? 'gif' : 'png';
+}
+
+function sp_theme_copyright()
+{
+	global $forum_copyright, $software_year, $forum_version, $modSettings;
+
+	// define the version and copyright year
+	$forum_version = !empty($modSettings['smfVersion']) ? 'SMF ' . $modSettings['smfVersion'] : 'SMF 2.1';
+	$software_year = '2014';
+
+	// Put in the version...
+	$forum_copyright = sprintf($forum_copyright, $forum_version, $software_year);
+
+	return '	<br />
+			<span class="smalltext" style="display: inline; visibility: visible; font-family: Verdana, Arial, sans-serif;">' . $forum_copyright . '
+			</span>';
 }
 ?>

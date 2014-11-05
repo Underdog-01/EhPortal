@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:WebDevil</id>
-	<name>WebDevil</name>
+	<id>napalm:EhPortal</id>
+	<name>EhPortal</name>
 	<version>1.0</version>
 */
 /*
- * WebDevil is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
+ * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * WebDevil Portal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -587,21 +587,21 @@ if (empty($has_block))
 		foreach ($fields as $field)
 			$smcFunc['db_remove_column']('{db_prefix}' . $table, $field);
 
-	$welcome_text = '<h2 style="text-align: center;">WebDevil Portal for the SMF 2.1.X branch</h2>
-<p>WebDevil was ported from SimplePortal 2.3.6 and is intended for use on the Simple Machines Forum (SMF) 2.1.X branch. This modification package is in no way directly affiliated with SimplePortal or Simple Machines Forum.</p>
+	$welcome_text = '<h2 style="text-align: center;">EhPortal Portal for the SMF 2.1.X branch</h2>
+<p>EhPortal was ported from SimplePortal 2.3.6 and is intended for use on the Simple Machines Forum (SMF) 2.1.X branch. This modification package is in no way directly affiliated with SimplePortal or Simple Machines Forum.</p>
 <p>Future development of this modification will focus on user centered innovation putting its software users at the heart of the innovation strategy. You are more than welcome to post your ideas and/or issues at the <a href="http://web-develop.ca">WebDev</a> main site to facilitate this process.</p>
 <p><strong>jQuery Ingenuousness</strong>
 <br />
-The use of jQuery libraries allows the SMF 2.1.X branch and WebDevil to take advantage of pre-written simple to use cross-browser Javascript functions that help ease their future development.</p>
+The use of jQuery libraries allows the SMF 2.1.X branch and EhPortal to take advantage of pre-written simple to use cross-browser Javascript functions that help ease their future development.</p>
 <p><strong>Easy Installation</strong>
 <br />
-WebDevil will always require you to uninstall any old versions first prior to the installation of newer releases. Your WebDevil dataabase settings, blocks and pages will always remain unless you opt to remove them when uninstalling.</p>
+EhPortal will always require you to uninstall any old versions first prior to the installation of newer releases. Your EhPortal dataabase settings, blocks and pages will always remain unless you opt to remove them when uninstalling.</p>
 <p><strong>Theme Support</strong>
 <br />
-WebDevil takes advantage of SMF hooks where possible which should allow the use of it on a variety of themes without issue.</p>
+EhPortal takes advantage of SMF hooks where possible which should allow the use of it on a variety of themes without issue.</p>
 <p><strong>Support</strong>
 <br />
-WebDevil offers professional support from its support team at <a href="httpL//web-develop.ca">www.web-develop.ca</a>,</p>';
+EhPortal offers professional support from its support team at <a href="httpL//web-develop.ca">www.web-develop.ca</a>,</p>';
 
 	$default_blocks = array(
 		'user_info' => array(
@@ -1112,7 +1112,7 @@ if (SMF == 'SSI')
 <html xmlns="http://www.w3.org/1999/xhtml"', $context['right_to_left'] ? ' dir="rtl"' : '', '>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=', $context['character_set'], '" />
-	<title>WebDevil &bull; Database Tool</title>
+	<title>EhPortal &bull; Database Tool</title>
 	<link rel="stylesheet" type="text/css" href="', $settings['theme_url'], '/css/index.css?236" />
 	<meta name="robots" content="noindex" />
 	<style type="text/css">
@@ -1174,10 +1174,10 @@ if (SMF == 'SSI')
 <body>
 <div id="distance"></div>
 <div id="page" class="windowbg2">
-	<h1 class="catbg">WebDevil &bull; Database Tool</h1>
-	<p id="info" class="windowbg">This tool will prepare your database to work with WebDevil. It will also fix database issues related to WebDevil, if there are any.</p>
+	<h1 class="catbg">EhPortal &bull; Database Tool</h1>
+	<p id="info" class="windowbg">This tool will prepare your database to work with EhPortal. It will also fix database issues related to EhPortal, if there are any.</p>
 	', $info, '
-	<p id="copy">WebDevil Portal &copy; 2014</p>
+	<p id="copy">EhPortal Portal &copy; 2014</p>
 </div>
 </body>
 </html>';

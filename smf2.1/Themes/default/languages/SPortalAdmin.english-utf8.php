@@ -3,13 +3,13 @@
 
 // Configuration area
 $txt['sp-adminConfiguration'] = 'Configuration';
-$txt['sp-adminConfigurationDesc'] = 'This area allows you to view WebDevil information and manage WebDevil settings.';
+$txt['sp-adminConfigurationDesc'] = 'This area allows you to view EhPortal information and manage EhPortal settings.';
 $txt['sp-adminGeneralSettingsName'] = 'General Settings';
 $txt['sp-adminBlockSettingsName'] = 'Block Settings';
 $txt['sp-adminArticleSettingsName'] = 'Article Settings';
 
 // General settings
-$txt['portalactive'] = 'Enable WebDevil';
+$txt['portalactive'] = 'Enable EhPortal';
 $txt['sp_portal_mode'] = 'Portal Mode';
 $txt['sp_portal_mode_options'] = 'Disabled|Front Page|Integration|Standalone';
 $txt['sp_maintenance'] = 'Maintenance Mode';
@@ -332,7 +332,7 @@ $txt['sp_admin_pages_preview'] = 'Preview';
 $txt['sp_admin_pages_general'] = 'General Settings';
 $txt['sp_admin_pages_style'] = 'Style Options';
 
-$txt['sp_admin_pages_desc'] = 'You can create and manage WebDevil pages in this area.';
+$txt['sp_admin_pages_desc'] = 'You can create and manage EhPortal pages in this area.';
 $txt['sp_pages_remove_confirm'] = 'Are you sure that you want to remove the selected pages?';
 $txt['sp_admin_pages_delete_confirm'] = 'Are you sure you want to delete this page?';
 $txt['sp_error_no_pages'] = 'There are no pages available.';
@@ -380,7 +380,7 @@ $txt['sp_admin_shoutbox_edit'] = 'Edit Shoutbox';
 $txt['sp_admin_shoutbox_prune'] = 'Prune Shoutbox';
 $txt['sp_admin_shoutbox_remove'] = 'Remove Shoutboxes';
 
-$txt['sp_admin_shoutbox_desc'] = 'You can create and manage WebDevil shoutboxes in this area.';
+$txt['sp_admin_shoutbox_desc'] = 'You can create and manage EhPortal shoutboxes in this area.';
 $txt['sp_shoutbox_remove_confirm'] = 'Are you sure that you want to remove the selected shoutboxes?';
 $txt['sp_admin_shoutbox_delete_confirm'] = 'Are you sure you want to delete this shoutbox?';
 $txt['sp_error_no_shoutbox'] = 'There are no shoutboxes available.';
@@ -446,50 +446,50 @@ $txt['sp-stateNo'] = 'No';
 
 // Information area
 $txt['sp-info_title'] = 'Information';
-$txt['sp-info_desc'] = 'Some useful system, and WebDevil information.';
-$txt['sp-info_live'] = 'Live from WebDevil...';
+$txt['sp-info_desc'] = 'Some useful system, and EhPortal information.';
+$txt['sp-info_live'] = 'Live from EhPortal...';
 $txt['sp-info_no_live'] = 'Sorry! At this time you are unable to connect to web-develop.ca\'s latest news file.';
 $txt['sp-info_general'] = 'General Information';
 $txt['sp-info_versions'] = 'Version Information';
 $txt['sp-info_your_version'] = 'Your Version';
 $txt['sp-info_current_version'] = 'Current Version';
 $txt['sp-info_managers'] = 'Managers';
-$txt['sp-info_intro'] = 'The WebDevil Team wants to thank everyone who helped make WebDevil what it is today, and the Simple Machines Team for the great forum software, SMF. It wouldn\'t have been possible without you, our users, and SMF.';
+$txt['sp-info_intro'] = 'The EhPortal Team wants to thank everyone who helped make EhPortal what it is today, and the Simple Machines Team for the great forum software, SMF. It wouldn\'t have been possible without you, our users, and SMF.';
 $txt['sp-info_team'] = 'The Team';
 $txt['sp-info_special'] = 'Special Thanks';
 $txt['sp-info_and'] = 'and';
 $txt['sp-info_anyone'] = 'For anyone we may have missed, thank you!';
 $txt['sp-info_groups_pm'] = 'Project Managers';
 $txt['sp-info_groups_dev'] = 'SimplePortal Developers';
-$txt['sp-info_groups_webdev'] = 'WebDevil Developers';
+$txt['sp-info_groups_webdev'] = 'EhPortal Developers';
 $txt['sp-info_groups_support'] = 'Support Specialists';
 $txt['sp-info_groups_customize'] = 'Customizers';
 $txt['sp-info_groups_language'] = 'Language Managers';
 $txt['sp-info_groups_marketing'] = 'Marketing';
 $txt['sp-info_groups_beta'] = 'Beta Testers';
 $txt['sp-info_groups_translators'] = 'Language Translators';
-$txt['sp-info_translators_message'] = 'Thank you for your efforts in the internationalization of WebDevil.';
-$txt['sp-info_groups_founder'] = 'Founding Father of WebDevil';
+$txt['sp-info_translators_message'] = 'Thank you for your efforts in the internationalization of EhPortal.';
+$txt['sp-info_groups_founder'] = 'Founding Father of EhPortal';
 $txt['sp-info_groups_orignal_pm'] = 'Original Project Managers';
 $txt['sp-info_fam_fam'] = 'Pretty Icons';
 $txt['sp-info_fam_fam_message'] = 'Mark James for his <a href="http://www.famfamfam.com/lab/icons/silk/">Fam Fam Fam Silk Icons</a>.';
-$txt['sp-info_contribute'] = 'Did you find WebDevil useful? <a href="%s" target="_blank">Contribute to the project!</a>';
+$txt['sp-info_contribute'] = 'Did you find EhPortal useful? <a href="%s" target="_blank">Contribute to the project!</a>';
 
 // Permissions
-$txt['permissiongroup_sp'] = 'WebDevil';
-$txt['permissiongroup_simple_sp'] = 'WebDevil';
+$txt['permissiongroup_sp'] = 'EhPortal';
+$txt['permissiongroup_simple_sp'] = 'EhPortal';
 $txt['permissionname_sp_admin'] = 'Administrate portal';
-$txt['permissionhelp_sp_admin'] = 'This permission allows users to administrate WebDevil.';
+$txt['permissionhelp_sp_admin'] = 'This permission allows users to administrate EhPortal.';
 $txt['permissionname_sp_manage_settings'] = 'Manage portal settings';
-$txt['permissionhelp_sp_manage_settings'] = 'This permission allows users to manage WebDevil settings.';
+$txt['permissionhelp_sp_manage_settings'] = 'This permission allows users to manage EhPortal settings.';
 $txt['permissionname_sp_manage_blocks'] = 'Manage portal blocks';
-$txt['permissionhelp_sp_manage_blocks'] = 'This permission allows users to manage WebDevil blocks.';
+$txt['permissionhelp_sp_manage_blocks'] = 'This permission allows users to manage EhPortal blocks.';
 $txt['permissionname_sp_manage_articles'] = 'Manage portal articles';
-$txt['permissionhelp_sp_manage_articles'] = 'This permission allows users to manage WebDevil articles.';
+$txt['permissionhelp_sp_manage_articles'] = 'This permission allows users to manage EhPortal articles.';
 $txt['permissionname_sp_manage_pages'] = 'Manage portal pages';
-$txt['permissionhelp_sp_manage_pages'] = 'This permission allows users to manage WebDevil pages.';
+$txt['permissionhelp_sp_manage_pages'] = 'This permission allows users to manage EhPortal pages.';
 $txt['permissionname_sp_manage_shoutbox'] = 'Manage portal shoutboxes';
-$txt['permissionhelp_sp_manage_shoutbox'] = 'This permission allows users to manage WebDevil shoutboxes.';
+$txt['permissionhelp_sp_manage_shoutbox'] = 'This permission allows users to manage EhPortal shoutboxes.';
 $txt['permissionname_sp_add_article'] = 'Can add article';
 $txt['permissionhelp_sp_add_article'] = 'This permission allows users to add articles.';
 $txt['permissionname_sp_auto_article_approval'] = 'Automatic article approval';
@@ -498,7 +498,7 @@ $txt['permissionname_sp_remove_article'] = 'Can remove article';
 $txt['permissionhelp_sp_remove_article'] = 'This permission allows users to remove articles.';
 
 // Compatibility strings
-$txt['sp-adminCatHelp'] = 'Here you can manage and configure WebDevil.';
-$txt['sp-adminCatDesc'] = 'Here you can manage and configure WebDevil.';
+$txt['sp-adminCatHelp'] = 'Here you can manage and configure EhPortal.';
+$txt['sp-adminCatDesc'] = 'Here you can manage and configure EhPortal.';
 
 ?>

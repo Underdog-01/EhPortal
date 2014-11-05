@@ -1,15 +1,17 @@
 Changes go downward, versions go upward. Please scroll to the bottom for a legend.
 Changelog started October 08, 2014.
-Changelog last updated October 15, 2014.
+Changelog last updated November 5, 2014.
 
-WebDevil 1.0
+EhPortal 1.0
 ================================================================================
- + WebDevil Portal branched from SimplePortal 2.3.6
+ + EhPortal Portal branched from SimplePortal 2.3.6
  + Added support for SMF 2.1.X installation
  + Updated News block for delayed rotation and fade (SMF 2.1.X only)
  + Added block settings for News rotation/delay
  ! Removed SMF 1.1.X and SMF 2.0.X support
  ! Updated permission parameters to a hook
+ ! fixed css within various templates
+ ! fixed copyright for standalone home page
 
 Legend:
 --------------------------------------------------------------------------------

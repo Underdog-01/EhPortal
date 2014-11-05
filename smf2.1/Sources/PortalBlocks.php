@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:WebDevil</id>
-	<name>WebDevil</name>
+	<id>napalm:EhPortal</id>
+	<name>EhPortal</name>
 	<version>1.0</version>
 */
 /*
- * WebDevil is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
+ * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * WebDevil Portal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -514,7 +514,7 @@ function sp_topPoster($parameters, $id, $return_parameters = false)
                         $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
 		}
 		else
-                        $avatar_style = 'style="border: 0px;"';		
+                        $avatar_style = 'style="border: 0px;"';
 
 		$members[] = array(
 			'id' => $row['id_member'],

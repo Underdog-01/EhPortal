@@ -216,7 +216,7 @@ function template_information()
 			</div>
 		</div>
 	</div>
-	<script language="JavaScript" type="text/javascript" src="http://www.web-develop.ca/Themes/default/scripts/webdevil.js"></script>	
+	<script language="JavaScript" type="text/javascript" src="http://www.web-develop.ca/Themes/default/scripts/ehportal.js"></script>
 	<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
 		function wdSetAnnouncements()
 		{

@@ -4,8 +4,8 @@
 // General strings
 $txt['sp-forum'] = 'Forum';
 $txt['sp-portal'] = 'Portal';
-$txt['sp-adminTitle'] = 'WebDevil Admin';
-$txt['sp-adminCatTitle'] = 'WebDevil';
+$txt['sp-adminTitle'] = 'EhPortal Admin';
+$txt['sp-adminCatTitle'] = 'EhPortal';
 $txt['sp-add_article'] = 'Add as Article';
 $txt['sp-remove_article'] = 'Remove from Articles';
 $txt['sp-dot'] = 'Dot';

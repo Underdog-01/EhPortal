@@ -4,16 +4,16 @@
 global $helptxt;
 
 // Configuration area
-$helptxt['sp_ConfigurationArea'] = 'Here you can configure WebDevil to meet your needs.';
+$helptxt['sp_ConfigurationArea'] = 'Here you can configure EhPortal to meet your needs.';
 
 // General settings
 $helptxt['portalactive'] = 'This will enable the portal page.';
-$helptxt['sp_portal_mode'] = 'WebDevil can run in several modes. This option enables you to select the mode you wish to use. Supported modes include:<br /><br />
+$helptxt['sp_portal_mode'] = 'EhPortal can run in several modes. This option enables you to select the mode you wish to use. Supported modes include:<br /><br />
 <strong>Disabled:</strong> This will completely disable the portal.<br /><br />
 <strong>Frontpage:</strong> This is the default setting. The portal page will greet viewers instead of the board index. Members will be able to access the board index by using the "forum" action, which can be accessed through the "forum" button.<br /><br />
 <strong>Integration:</strong> This will disable the portal page. Blocks are only usable in forum.<br /><br />
 <strong>Standalone:</strong> This will enable the portal to be displayed at a different url, away from the forum. The portal page appears in the url defined for the "Standalone URL" option. For details, check the PortalStandalone.php file found inside the forum root.';
-$helptxt['sp_maintenance'] = 'When maintenance is enabled, portal is only visible by members with Moderate WebDevil permission.';
+$helptxt['sp_maintenance'] = 'When maintenance is enabled, portal is only visible by members with Moderate EhPortal permission.';
 $helptxt['sp_standalone_url'] = 'Full URL to the standalone file.<br /><br />Example: http://myforum.com/portal.php';
 $helptxt['portaltheme'] = 'Select the theme which will be used for the portal.';
 $helptxt['sp_disableForumRedirect'] = 'If this box is unchecked, users will be redirected to the portal after they login or logout. If this box is checked, then users will be redirected to the BoardIndex.';

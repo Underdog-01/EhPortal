@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
-	<id>[napalm]:WebDevil</id>
-	<name>WebDevil</name>
+	<id>[napalm]:EhPortal</id>
+	<name>EhPortal</name>
 	<version>1.0</version>
 	<type>modification</type>
 
@@ -10,7 +10,7 @@
 
 	<install for="2.0.99 - 2.1.99">
 		<!-- Read me -->
-		<readme type="inline">This will install WebDevil Portal for SMF 2.1.</readme>
+		<readme type="inline">This will install EhPortal for SMF 2.1.</readme>
 
 		<!-- Modifications -->
 		<modification>smf2.1/install.xml</modification>
@@ -61,6 +61,7 @@
 
 		<!-- JavaScript files -->
 		<require-file name="smf2.1/Themes/default/scripts/portal.js" destination="$themedir/scripts" />
+		<require-file name="smf2.1/Themes/default/scripts/ehportal.js" destination="$themedir/scripts" />
 
 		<!-- Install scripts -->
 		<database>smf2.1/install.php</database>
@@ -132,6 +133,7 @@
 
 		<!-- JavaScript files -->
 		<remove-file name="$themedir/scripts/portal.js" />
+		<remove-file name="$themedir/scripts/ehportal.js" />
 
 		<!-- Remove permission hook -->
 		<code>smf2.1/uninstall.php</code>
