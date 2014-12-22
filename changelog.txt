@@ -8,10 +8,11 @@ EhPortal 1.0
  + Added support for SMF 2.1.X installation
  + Updated News block for delayed rotation and fade (SMF 2.1.X only)
  + Added block settings for News rotation/delay
+ + recent topics character limit no longer causes malformed HTML and/or BBCode
  ! Removed SMF 1.1.X and SMF 2.0.X support
  ! Updated permission parameters to a hook
  ! fixed css within various templates
- ! fixed copyright for standalone home page
+ ! fixed copyright for standalone home page 
 
 Legend:
 --------------------------------------------------------------------------------

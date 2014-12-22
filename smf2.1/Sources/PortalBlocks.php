@@ -104,6 +104,12 @@ if (!defined('SMF'))
 
 	void sp_php()
 		// !!!
+
+	void sp_decode()
+		// !!!
+
+	void sp_current_page()
+		// !!!
 */
 
 function sp_userInfo($parameters, $id, $return_parameters = false)
@@ -511,10 +517,10 @@ function sp_topPoster($parameters, $id, $return_parameters = false)
 		{
 			$avatar_width = !empty($modSettings['avatar_max_width_external']) ? 'width: ' . $modSettings['avatar_max_width_external'] . 'px;' : '';
 			$avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
-                        $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
+			$avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
 		}
 		else
-                        $avatar_style = 'style="border: 0px;"';
+			$avatar_style = 'style="border: 0px;"';
 
 		$members[] = array(
 			'id' => $row['id_member'],
@@ -906,10 +912,10 @@ function sp_topStatsMember($parameters, $id, $return_parameters = false)
 		{
 			$avatar_width = !empty($modSettings['avatar_max_width_external']) ? 'width: ' . $modSettings['avatar_max_width_external'] . 'px;' : '';
 			$avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
-                        $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
+			$avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
 		}
 		else
-                        $avatar_style = 'style="border: 0px;"';
+			$avatar_style = 'style="border: 0px;"';
 
 		// Setup the row :P
 		$output = '';
@@ -1249,7 +1255,7 @@ function sp_showPoll($parameters, $id, $return_parameters = false)
 
 function sp_boardNews($parameters, $id, $return_parameters = false)
 {
-	global $scripturl, $txt, $settings, $modSettings, $context, $smcFunc, $color_profile;
+	global $scripturl, $txt, $settings, $modSettings, $context, $smcFunc, $color_profile, $sourcedir;
 
 	$block_parameters = array(
 		'board' => 'boards',
@@ -1276,6 +1282,7 @@ function sp_boardNews($parameters, $id, $return_parameters = false)
 	$start = max(0, $start);
 
 	loadLanguage('Stats');
+	require_once($sourcedir . '/Subs-PortalTruncate.php');
 
 	$stable_icons = array('xx', 'thumbup', 'thumbdown', 'exclamation', 'question', 'lamp', 'smiley', 'angry', 'cheesy', 'grin', 'sad', 'wink', 'moved', 'recycled', 'wireless');
 	$icon_sources = array();
@@ -1326,7 +1333,7 @@ function sp_boardNews($parameters, $id, $return_parameters = false)
 
 	$request = $smcFunc['db_query']('', '
 		SELECT
-			m.icon, m.subject, m.body, IFNULL(mem.real_name, m.poster_name) AS poster_name, m.poster_time,
+			m.icon, m.subject, m.body, IFNULL(mem.real_name, m.poster_name) AS poster_name, m.poster_time, m.id_msg,
 			t.num_replies, t.id_topic, m.id_member, m.smileys_enabled, m.id_msg, t.locked, mem.avatar,
 			a.id_attach, a.attachment_type, a.filename, t.num_views
 		FROM {db_prefix}topics AS t
@@ -1352,13 +1359,21 @@ function sp_boardNews($parameters, $id, $return_parameters = false)
 			$row['body'] = $smcFunc['substr']($row['body'], 0, $cutoff);
 			$limited = true;
 		}
-		elseif (!empty($length) && $smcFunc['strlen']($row['body']) > $length)
-		{
-			$row['body'] = $smcFunc['substr']($row['body'], 0, $length);
-			$limited = true;
-		}
 
 		$row['body'] = parse_bbc($row['body'], $row['smileys_enabled'], $row['id_msg']);
+
+		if (!empty($length) && $smcFunc['strlen']($row['body']) > $length && !$limited)
+		{
+			if (($msgBody = cache_get_data('portalRecent' . $row['id_msg'], 90)) == null)
+			{
+				$msgBody = TruncateHTML::truncateChars($row['body'], $length, '');
+
+				if (!empty($modSettings['cache_enable']))
+				    cache_put_data('portalRecent' . $row['id_msg'], $msgBody, 90);
+			}
+			$row['body'] = $msgBody;
+			$limited = true;
+		}
 
 		// Only place an ellipsis if the body has been shortened.
 		if ($limited)
@@ -1368,10 +1383,10 @@ function sp_boardNews($parameters, $id, $return_parameters = false)
 		{
 			$avatar_width = !empty($modSettings['avatar_max_width_external']) ? 'width: ' . $modSettings['avatar_max_width_external'] . 'px;' : '';
 			$avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
-                        $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
+			$avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
 		}
 		else
-                        $avatar_style = 'style="border: 0px;"';
+			$avatar_style = 'style="border: 0px;"';
 
 		if (empty($modSettings['messageIconChecks_disable']) && !isset($icon_sources[$row['icon']]))
 			$icon_sources[$row['icon']] = file_exists($settings['theme_dir'] . '/images/post/' . $row['icon'] . '.' . $context['SPortal']['image_type']) ? 'images_url' : 'default_images_url';
@@ -2338,10 +2353,10 @@ function sp_staff($parameters, $id, $return_parameters = false)
 		{
 			$avatar_width = !empty($modSettings['avatar_max_width_external']) ? 'width: ' . $modSettings['avatar_max_width_external'] . 'px;' : '';
 			$avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
-                        $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
+			$avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
 		}
 		else
-                        $avatar_style = 'style="border: 0px;"';
+			$avatar_style = 'style="border: 0px;"';
 
 		if (in_array($row['id_member'], $admins))
 			$row['type'] = 1;
@@ -2460,10 +2475,10 @@ function sp_articles($parameters, $id, $return_parameters = false)
 		{
 			$avatar_width = !empty($modSettings['avatar_max_width_external']) ? 'width: ' . $modSettings['avatar_max_width_external'] . 'px;' : '';
 			$avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
-                        $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
+			$avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
 		}
 		else
-                        $avatar_style = 'style="border: 0px;"';
+			$avatar_style = 'style="border: 0px;"';
 
 		$articles[] = array(
 			'id' => $row['id_topic'],
@@ -3268,11 +3283,11 @@ function sp_blog($parameters, $id, $return_parameters = false)
 				if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
 				{
 					$avatar_width = !empty($modSettings['avatar_max_width_external']) ? 'width: ' . $modSettings['avatar_max_width_external'] . 'px;' : '';
-                                        $avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
-                                        $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
-                                }
-                                else
-                                        $avatar_style = 'style="border: 0px;"';
+					$avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
+					$avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
+				}
+				else
+					$avatar_style = 'style="border: 0px;"';
 
 				$blogs[] = array(
 					'id' => $row['blog_id'],
@@ -3460,11 +3475,11 @@ function sp_blog($parameters, $id, $return_parameters = false)
 				if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
 				{
 					$avatar_width = !empty($modSettings['avatar_max_width_external']) ? 'width: ' . $modSettings['avatar_max_width_external'] . 'px;' : '';
-                                        $avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
-                                        $avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
-                                }
-                                else
-                                        $avatar_style = 'style="border: 0px;"';
+					$avatar_height = !empty($modSettings['avatar_max_height_external']) ? 'height: ' . $modSettings['avatar_max_height_external'] . 'px;' : '';
+					$avatar_style = 'style="' . $avatar_width . $avatar_height . ';border: 0px;"';
+				}
+				else
+					$avatar_style = 'style="border: 0px;"';
 
 				censorText($row['subject']);
 
