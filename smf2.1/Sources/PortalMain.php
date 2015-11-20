@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:EhPortal</id>
+	<id>ChenZhen:EhPortal</id>
 	<name>EhPortal</name>
-	<version>1.0</version>
+	<version>1.1</version>
 */
 /*
  * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2015 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -26,7 +26,18 @@ function sportal_main()
 {
 	global $smcFunc, $context, $sourcedir;
 
-	if (WIRELESS)
+	$wirelessArray = array(
+		'is_iphone',
+		'is_android',
+		'is_blackberry',
+		'is_nokia',
+		'is_opera_mobi',
+		'is_opera_mini'
+	);
+	foreach ($wirelessArray as $wirelessType)
+		$sp_wireless = !empty($context['browser'][$wirelessType]) ? true : false;
+
+	if ($sp_wireless)
 		redirectexit('action=forum');
 
 	$context['page_title'] = $context['forum_name'];

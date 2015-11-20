@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0; PortalAdminPages
+// Version: 1.1; PortalAdminPages
 
 function template_pages_list()
 {
@@ -204,6 +204,12 @@ function template_pages_edit()
 
 	echo '
 							</select>
+						</dd>
+						<dt>
+							<label for="resize">', $txt['sp_admin_pages_col_resize'], ':</label>
+						</dt>
+						<dd>
+							<input type="checkbox" name="resize" id="page_namespace" value="1"', $context['SPortal']['page']['resize'] ? ' checked="checked"' : '', ' class="input_check" />
 						</dd>
 						<dt>
 							<label for="page_status">', $txt['sp_admin_pages_col_status'], ':</label>

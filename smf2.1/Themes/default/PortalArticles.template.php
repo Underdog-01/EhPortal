@@ -1,63 +1,12 @@
 <?php
-// Version: 1.0; PortalArticles
+// Version: 1.1; PortalArticles
 
 function template_articles()
 {
-	global $context;
-
-	if ($context['SPortal']['core_compat'])
-		template_articles_core();
-	else
-		template_articles_curve();
+	template_articles_default();
 }
 
-function template_articles_core()
-{
-	global $context, $txt, $modSettings, $scripturl;
-
-	if (empty($modSettings['articleactive']))
-		return;
-
-	while ($article = $context['get_articles']())
-	{
-		echo '
-					<div class="tborder sp_article_content">
-						<table class="sp_block">
-							<tr class="catbg">
-								<td class="sp_middle">', $article['message']['icon'], '</td>
-								<td class="sp_middle sp_regular_padding sp_fullwidth">', $article['topic']['link'], '</td>
-							</tr>
-							<tr class="windowbg">
-								<td class="sp_regular_padding" colspan="2">';
-
-		if (!empty($modSettings['articleavatar']) && $article['poster']['avatar']['name'] !== null && !empty($article['poster']['avatar']['href']))
-			echo '
-									<a href="', $scripturl, '?action=profile;u=', $article['poster']['id'], '"><img src="', $article['poster']['avatar']['href'], '" alt="', $article['poster']['name'], '" style="width: 30px;float: right;" /></a>
-									<div class="middletext">', $article['message']['time'], ' ', $txt['by'], ' ', $article['poster']['link'], '<br />', $txt['sp-articlesViews'], ': ', $article['topic']['views'], ' | ', $txt['sp-articlesComments'], ': ', $article['topic']['replies'], '</div>';
-		else
-			echo '
-									<div class="middletext">', $article['message']['time'], ' ', $txt['by'], ' ', $article['poster']['link'], ' | ', $txt['sp-articlesViews'], ': ', $article['topic']['views'], ' | ', $txt['sp-articlesComments'], ': ', $article['topic']['replies'], '</div>';
-
-		echo '
-									<div class="post"><hr />', !empty($article['category']['picture']['href']) ? '<div><img src="' . $article['category']['picture']['href'] . '" alt="' . $article['category']['name'] . '" class="sp_article_image" align="right" /></div>' : '', $article['message']['body'], '<br/><br/>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="windowbg2" colspan="2">
-									<div class="sp_right sp_regular_padding">', $article['article']['link'], ' ',  $article['article']['new_comment'], '</div>
-								</td>
-							</tr>
-						</table>
-					</div>';
-	}
-
-	if (!empty($modSettings['articleperpage']) && !empty($context['page_index']))
-		echo '
-					<div class="sp_page_index">', $txt['sp-articlesPages'], ': ', $context['page_index'], '</div>';
-}
-
-function template_articles_curve()
+function template_articles_default()
 {
 	global $context, $txt, $modSettings, $scripturl;
 

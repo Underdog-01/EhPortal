@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:EhPortal</id>
+	<id>ChenZhen:EhPortal</id>
 	<name>EhPortal</name>
-	<version>1.0</version>
+	<version>1.1</version>
 */
 /*
  * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2015 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -357,6 +357,7 @@ function sportal_admin_page_edit()
 			'groups_denied' => 'string',
 			'style' => 'string',
 			'status' => 'int',
+			'resize' => 'int',
 		);
 
 		$page_info = array(
@@ -370,6 +371,7 @@ function sportal_admin_page_edit()
 			'groups_denied' => $groups_denied,
 			'style' => sportal_parse_style('implode'),
 			'status' => !empty($_POST['status']) ? 1 : 0,
+			'resize' => !empty($_POST['resize']) ? 1 : 0,
 		);
 
 		if ($page_info['type'] == 'bbc')
@@ -528,6 +530,7 @@ function sportal_admin_page_edit()
 			'groups_denied' => $groups_denied,
 			'style' => sportal_parse_style('implode'),
 			'status' => !empty($_POST['status']),
+			'resize' => !empty($_POST['resize']),
 		);
 
 		if ($context['SPortal']['page']['type'] == 'bbc')
@@ -549,6 +552,7 @@ function sportal_admin_page_edit()
 			'groups_denied' => array(),
 			'style' => '',
 			'status' => 1,
+			'resize' => 1,
 		);
 	}
 	else

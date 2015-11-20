@@ -1,7 +1,6 @@
-<div style="padding-top: 0.5em; line-height: 1.5em;">
-	<div style="border-bottom: 1px dashed; padding-bottom: 0.5em; width: 500px; font-weight: bold; font-size: 130%;">Installation Complete</div>
-	<p style="padding-top: 0.5em;">EhPortal installation has successfully completed. Thank you for installing EhPortal.</p>
-	<p>You can visit <a href="http://web-develop.ca" title="WebDev">www.web-develop.ca</a> for support and general feedback.</p>
-	<p>We hope you enjoy using EhPortal!</p>
-	<p>- WebDev Team</a></p>
-</div>
+[size=15px][b][u]Installation Complete[/u][/b][/size]
+
+EhPortal installation has successfully completed. Thank you for installing EhPortal.
+You can visit [url=http://web-develop.ca/index.php?board=38.0]web-develop.ca[/url] for support and general feedback.
+We hope you enjoy using EhPortal!
+- WebDev Team

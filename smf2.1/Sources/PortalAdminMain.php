@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:EhPortal</id>
+	<id>ChenZhen:EhPortal</id>
 	<name>EhPortal</name>
-	<version>1.0</version>
+	<version>1.1</version>
 */
 /*
  * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2015 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -275,14 +275,14 @@ function sportal_information($in_admin = true)
 				array(
 					'title' => $txt['sp-info_groups_pm'],
 					'members' => array(
-						'Napalm',
+						'Chen Zhen',
 						'',
 					),
 				),
 				array(
 					'title' => $txt['sp-info_groups_webdev'],
 					'members' => array(
-						'Napalm',
+						'Chen Zhen',
 					),
 				),
 				array(
@@ -296,45 +296,27 @@ function sportal_information($in_admin = true)
 				array(
 					'title' => $txt['sp-info_groups_support'],
 					'members' => array(
-						'',
-						'',
-						'',
-						'',
 					),
 				),
 				array(
 					'title' => $txt['sp-info_groups_customize'],
 					'members' => array(
-						'',
-						'',
-						'',
 					),
 				),
 				array(
 					'title' => $txt['sp-info_groups_language'],
 					'members' => array(
-						'',
-						'',
-						'',
 					),
 				),
 				array(
 					'title' => $txt['sp-info_groups_marketing'],
 					'members' => array(
-						'',
 					),
 				),
 				array(
 					'title' => $txt['sp-info_groups_beta'],
 					'members' => array(
-						'',
-						'',
-						'',
-						'',
-						'',
-						'',
-						'',
-						'',
+						'bigguy',
 					),
 				),
 			),
@@ -411,4 +393,5 @@ function sportal_array_flatten($array)
 
 	return $result;
 }
+
 ?>

@@ -1,18 +1,30 @@
 Changes go downward, versions go upward. Please scroll to the bottom for a legend.
 Changelog started October 08, 2014.
-Changelog last updated November 5, 2014.
+Changelog last updated November 13, 2015.
+
+EhPortal 1.1
+================================================================================
+ + Updated copyright year to 2015
+ + Standalone mode reconfigured using a different method
+ + Updated wireless detection method
+ + Added bullets for news block
+ ! Fixed copyright placement for SMF 2.1 Beta 2
+ ! Fixed installation routine
+ ! Fixed highlighting of home nav link
+ ! Fixed WebDev news & current version
+ ! Fixed HTML entities within news fader
 
 EhPortal 1.0
 ================================================================================
+ + Updated permission parameters to a hook
  + EhPortal Portal branched from SimplePortal 2.3.6
  + Added support for SMF 2.1.X installation
  + Updated News block for delayed rotation and fade (SMF 2.1.X only)
  + Added block settings for News rotation/delay
- + recent topics character limit no longer causes malformed HTML and/or BBCode
+ + Recent topics character limit no longer causes malformed HTML and/or BBCode
  ! Removed SMF 1.1.X and SMF 2.0.X support
- ! Updated permission parameters to a hook
- ! fixed css within various templates
- ! fixed copyright for standalone home page 
+ ! Fixed css within various templates
+ ! Fixed copyright for standalone home page
 
 Legend:
 --------------------------------------------------------------------------------

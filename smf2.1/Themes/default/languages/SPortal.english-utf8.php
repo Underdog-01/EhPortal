@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0; SPortal
+// Version: 1.1; SPortal
 
 // General strings
 $txt['sp-forum'] = 'Forum';
@@ -142,4 +142,5 @@ $txt['sp_subscript'] = 'Subscript';
 $txt['sp_teletype'] = 'Teletype';
 $txt['sp_bbc_quote'] = 'Quote';
 $txt['sp_bbc_code'] = 'Code';
+
 ?>

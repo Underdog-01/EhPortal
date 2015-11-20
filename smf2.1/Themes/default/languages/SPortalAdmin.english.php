@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0; SPortalAdmin
+// Version: 1.1; SPortalAdmin
 
 // Configuration area
 $txt['sp-adminConfiguration'] = 'Configuration';
@@ -348,6 +348,7 @@ $txt['sp_admin_pages_col_body'] = 'Body';
 $txt['sp_admin_pages_col_type'] = 'Type';
 $txt['sp_admin_pages_col_views'] = 'Views';
 $txt['sp_admin_pages_col_status'] = 'Active';
+$txt['sp_admin_pages_col_resize'] = 'Minimal Page Height';
 $txt['sp_admin_pages_col_actions'] = 'Actions';
 $txt['sp_admin_pages_col_permissions'] = 'Permissions';
 $txt['sp_admin_pages_permissions_set_custom'] = 'Custom';

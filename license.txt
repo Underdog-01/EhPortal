@@ -1,6 +1,6 @@
 New copyright notice:
 EhPortal Portal
-Copyright (c) 2014 WebDev (http://web-develop.ca)
+Copyright (c) 2015 WebDev (http://web-develop.ca)
 
 All SMF 2.1.X alterations and additions have been developed under the EhPortal copyright.
 The original copyright notice applies to both as instructed by the original copyright holder.

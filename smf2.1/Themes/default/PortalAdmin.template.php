@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0; PortalAdmin
+// Version: 1.1; PortalAdmin
 
 function template_general_settings()
 {
@@ -190,7 +190,7 @@ function template_information()
 			<div class="windowbg2">
 				<span class="topslice"><span></span></span>
 				<div class="sp_content_padding">
-					<div id="wdAnnouncements" style="">', $txt['sp-info_no_live'], '</div>
+					<div id="ehAnnouncements" style="">', $txt['sp-info_no_live'], '</div>
 				</div>
 				<span class="botslice"><span></span></span>
 			</div>
@@ -206,9 +206,9 @@ function template_information()
 				<div class="sp_content_padding">
 					<strong>', $txt['sp-info_versions'], ':</strong><br />
 					', $txt['sp-info_your_version'], ':
-					<em id="spYourVersion" style="white-space: nowrap;">', $context['sp_version'], '</em><br />
+					<em id="ehYourVersion" style="white-space: nowrap;">', $context['sp_version'], '</em><br />
 					', $txt['sp-info_current_version'], ':
-					<em id="wdCurrentVersion" style="white-space: nowrap;">??</em><br />
+					<em id="ehCurrentVersion" style="white-space: nowrap;">??</em><br />
 					<strong>', $txt['sp-info_managers'], ':</strong>
 					', implode(', ', $context['sp_managers']), '
 				</div>
@@ -216,50 +216,46 @@ function template_information()
 			</div>
 		</div>
 	</div>
-	<script language="JavaScript" type="text/javascript" src="http://www.web-develop.ca/Themes/default/scripts/ehportal.js"></script>
-	<script language="JavaScript" type="text/javascript"><!-- // --><![CDATA[
-		function wdSetAnnouncements()
+	<script type="text/javascript" src="http://web-develop.ca/Themes/default/scripts/ehportal_info.js?ep1"></script>
+	<script type="text/javascript"><!-- // --><![CDATA[
+		function ehSetAnnouncements()
 		{
-			if (typeof(window.wdAnnouncements) == "undefined" || typeof(window.wdAnnouncements.length) == "undefined")
+			if (typeof(window.ehAnnouncementsData) == "undefined" || typeof(window.ehAnnouncementsData.length) == "undefined")
 				return;
 
 			var str = "<div style=\"margin: 4px; font-size: 0.85em;\">";
 
-			for (var i = 0; i < window.wdAnnouncements.length; i++)
+			for (var i = 0; i < window.ehAnnouncementsData.length; i++)
 			{
-				str += "\n	<div style=\"padding-bottom: 2px;\"><a hre" + "f=\"" + window.wdAnnouncements[i].href + "\">" + window.wdAnnouncements[i].subject + "<" + "/a> ', $txt['on'], ' " + window.wdAnnouncements[i].time + "<" + "/div>";
+				str += "\n	<div style=\"padding-bottom: 2px;\"><a hre" + "f=\"" + window.ehAnnouncementsData[i].href + "\">" + window.ehAnnouncementsData[i].subject + "<" + "/a> ', $txt['on'], ' " + window.ehAnnouncementsData[i].time + "<" + "/div>";
 				str += "\n	<div style=\"padding-left: 2ex; margin-bottom: 1.5ex; border-top: 1px dashed;\">"
-				str += "\n		" + window.wdAnnouncements[i].message;
+				str += "\n		" + window.ehAnnouncementsData[i].message;
 				str += "\n	<" + "/div>";
 			}
 
-			setInnerHTML(document.getElementById("wdAnnouncements"), str + "<" + "/div>");
+			setInnerHTML(document.getElementById("ehAnnouncements"), str + "<" + "/div>");
 		}
 
-		function wdCurrentVersion()
+		function ehCurrentVersion()
 		{
-			var wdVer, yourVer;
-
-			if (typeof(window.wdVersion) != "string")
+			var ehVer, yourVer;
+			if (typeof(window.ehCurrentVersionData) != "string")
 				return;
 
-			wdVer = document.getElementById("wdCurrentVersion");
-			yourVer = document.getElementById("wdYourVersion");
+			ehVer = document.getElementById("ehCurrentVersion");
+			yourVer = document.getElementById("ehYourVersion");
 
-			setInnerHTML(wdVer, window.wdVersion);
+			setInnerHTML(ehVer, window.ehCurrentVersionData);
 
 			var currentVersion = getInnerHTML(yourVer);
-			if (currentVersion != window.wdVersion)
+			if (currentVersion != window.ehCurrentVersionData)
 				setInnerHTML(yourVer, "<span class=\"alert\">" + currentVersion + "<" + "/span>");
-		}';
-
-		echo '
-		var func = function ()
-		{
-			wdSetAnnouncements();
-			wdCurrentVersion();
 		}
-		', $context['SPortal']['core_compat'] == 'old' ? 'add_load_event(func);' : 'addLoadEvent(func);','
+		$(document).ready(function()
+		{
+			ehSetAnnouncements();
+			ehCurrentVersion();
+		});
 	// ]]></script>';
 	}
 
@@ -308,4 +304,5 @@ function template_information()
 		<span class="botslice"><span></span></span>
 	</div>';
 }
+
 ?>

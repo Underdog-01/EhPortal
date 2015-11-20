@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:EhPortal</id>
+	<id>ChenZhen:EhPortal</id>
 	<name>EhPortal</name>
-	<version>1.0</version>
+	<version>1.1</version>
 */
 /*
  * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2015 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -1377,7 +1377,7 @@ function sp_boardNews($parameters, $id, $return_parameters = false)
 
 		// Only place an ellipsis if the body has been shortened.
 		if ($limited)
-			$row['body'] .= '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.0" title="' . $row['subject'] . '">...</a>';
+			$row['body'] = substr($row['body'], 0, 3) === '<p>' ? substr_replace($row['body'], '<p style="display: inline-block;">', 0, 3) . '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.0" title="' . $row['subject'] . '">...</a>' : $row['body'] . '<a href="' . $scripturl . '?topic=' . $row['id_topic'] . '.0" title="' . $row['subject'] . '">...</a>';
 
 		if ($modSettings['avatar_action_too_large'] == 'option_html_resize' || $modSettings['avatar_action_too_large'] == 'option_js_resize')
 		{
@@ -1598,27 +1598,43 @@ function sp_news($parameters, $id, $return_parameters = false)
 
 	$delayTime = !empty($modSettings['sp_delay_time']) ? (int)$modSettings['sp_delay_time'] : 0;
 	$fadeTime = !empty($modSettings['sp_fade_time']) ? (int)$modSettings['sp_fade_time'] : 0;
+	$bullets = !empty($modSettings['sp_bullets']) ? (int)$modSettings['sp_bullets'] : 0;
+	$blockId = 'sp_block_' . $id;
 
 	if ($delayTime > 0 && !empty($context['news_lines']))
 	{
 		echo '
+								<div class="sp_center sp_fullwidth sp_news_rotater" id="sp_rotate', $id, '"></div>
+								<ul class="sp_news_nav sp_center sp-pager">';
+		foreach ($context['news_lines'] as $key => $newsLine)
+			echo '
+									<li class="sp_newsBullet"><a onclick="sp_rotateNews(\'', $id, '_', $key, '\');" id="sp_news_nav_', $id, '_', $key, '" href="javascript:;" nav_id="', $id, $key, '" class="sp_news_list">&nbsp;</a></li>';
+		echo '
+								</ul>
 								<script type="text/javascript">
-									var sp_news = ', json_encode($context['news_lines']), '
-									var sp_fade = ',  json_encode($fadeTime),'
-									var sp_delay = ',  json_encode($delayTime),'
-									var sp_block_id = ',  json_encode($id),'
-									function sp_rotateNews()
+									var sp_news = ', json_encode($context['news_lines']), ';
+									var sp_fade = ',  json_encode($fadeTime),';
+									var sp_delay = ',  json_encode($delayTime),';
+									var sp_block_id = ',  json_encode($id),';
+									function sp_rotateNews(sp_override = "-1")
 									{
-										var ct = $("#sp_rotate" + sp_block_id).data("news") || 0;
-										$("#sp_rotate" + sp_block_id).data("news", ct == sp_news.length -1 ? 0 : ct + 1).text(sp_news[ct]).fadeIn().delay(sp_delay).fadeOut(sp_fade, sp_rotateNews);
+										var ct = sp_override != "-1" ? parseInt(sp_override.replace("', $id,'_", "")) : ($("#sp_rotate" + sp_block_id).data("news") || 0);
+										$("#sp_rotate" + sp_block_id).data("news", ct == sp_news.length -1 ? 0 : ct + 1).html(sp_decodeHtml(sp_news[ct])).fadeIn().delay(sp_delay).fadeOut(sp_fade, sp_rotateNews);
+										', (!empty($bullets) ? '
+										$("a").filter(function(){
+											var myId = this.id.match(/sp_news_nav_' . $id . '_*/);
+											return myId;
+										}).removeClass("sp-active").addClass("sp-inactive");
+										document.getElementById("sp_news_nav_' . $id . '_" + ct).className = "sp-active";
+										$("div#' . $blockId . '").css("padding-bottom", "1%");
+										' : ''), '
 									}
-									$(sp_rotateNews);
-								</script>
-								<div class="sp_center sp_fullwidth" id="sp_rotate' . $id . '"></div>';
+									$(sp_rotateNews("-1"));
+								</script>';
 	}
 	elseif (!empty($context['random_news_line']))
 		echo '
-								<div class="sp_center sp_fullwidth">', $context['random_news_line'], '</div>';
+								<div class="sp_center sp_fullwidth">', stripslashes(htmlspecialchars($context['random_news_line'])), '</div>';
 }
 
 function sp_attachmentImage($parameters, $id, $return_parameters = false)
@@ -3670,4 +3686,5 @@ function sp_current_page($page_url = 'http://')
 
 	return $page_url;
 }
+
 ?>

@@ -1,13 +1,13 @@
 <?php
 /*
-	<id>napalm:EhPortal</id>
+	<id>ChenZhen:EhPortal</id>
 	<name>EhPortal</name>
-	<version>1.0</version>
+	<version>1.1</version>
 */
 /*
  * EhPortal is a ported version of SimplePortal 2.3.6 (Copyright (c) 2014 SimplePortal Team.)
  * This software is in no way affiliated with the original developers
- * EhPortal ~ Copyright (c) 2014 WebDev (http://web-develop.ca)
+ * EhPortal ~ Copyright (c) 2015 WebDev (http://web-develop.ca)
  * Distributed under the BSD 2-Clause License (http://opensource.org/licenses/BSD-2-Clause)
 */
 
@@ -87,13 +87,33 @@ if (!defined('SMF'))
 
 function sportal_init($standalone = false)
 {
-	global $context, $sourcedir, $scripturl, $modSettings;
+	global $context, $sourcedir, $scripturl, $boardurl, $modSettings;
 	global $settings, $options, $boarddir, $maintenance, $sportal_version;
 
-	$sportal_version = '1.0';
+	$sportal_version = '1.1';
 
 	if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'dlattach')
 		return;
+
+	// Some variables for ease.
+	$action = !empty($context['current_action']) ? $context['current_action'] : '';
+	$sub_action = !empty($context['current_subaction']) ? $context['current_subaction'] : '';
+	$board = !empty($context['current_board']) ? 'b' . $context['current_board'] : '';
+	$topic = !empty($context['current_topic']) ? 't' . $context['current_topic'] : '';
+	$page = !empty($_REQUEST['page']) ? 'p' . $page_info['id'] : '';
+	$portal = (empty($action) && empty($sub_action) && empty($board) && empty($topic) && SMF != 'SSI' && $modSettings['sp_portal_mode'] == 1) || $action == 'portal' || !empty($context['standalone']) ? true : false;
+
+	if (sp_page_url() === $boardurl . '/' || sp_page_url() === $boardurl || strpos(sp_page_url(), $scripturl . '?action=portal;') !== false)
+		redirectexit($scripturl . '?action=portal');
+	elseif ($portal)
+	{
+		// replace the url history to mimic the standalone url otherwise use the smf directory
+		$standAlone = !empty($modSettings['sp_standalone_url']) ? $modSettings['sp_standalone_url'] : '.';
+
+		$context['html_headers'] .= '<script type="text/javascript">window.history.' . ($standAlone === '.' || $standAlone === '..' ? 'push' : 'replace') . 'State("{{\'page_id\': 1}", "' . $context['forum_name'] . '", "' . $standAlone . '");</script>';
+		$context['current_action'] = 'portal';
+		$_REQUEST['action'] = 'portal';
+	}
 
 	if (!$standalone)
 	{
@@ -123,7 +143,19 @@ function sportal_init($standalone = false)
 		$context['SPortal']['on_portal'] = getShowInfo(0, 'portal', '');
 	}
 
-	if (WIRELESS || ($standalone && (isset($_REQUEST['wap']) || isset($_REQUEST['wap2']) || isset($_REQUEST['imode']))) || !empty($settings['disable_sp']) || empty($modSettings['sp_portal_mode']) || ((!empty($modSettings['sp_maintenance']) || !empty($maintenance)) && !allowedTo('admin_forum')) || isset($_GET['debug']) || (empty($modSettings['allow_guestAccess']) && $context['user']['is_guest']))
+
+	$wirelessArray = array(
+		'is_iphone',
+		'is_android',
+		'is_blackberry',
+		'is_nokia',
+		'is_opera_mobi',
+		'is_opera_mini'
+	);
+	foreach ($wirelessArray as $wirelessType)
+		$sp_wireless = !empty($context['browser'][$wirelessType]) ? true : false;
+
+	if ($sp_wireless || ($standalone && (isset($_REQUEST['wap']) || isset($_REQUEST['wap2']) || isset($_REQUEST['imode']))) || !empty($settings['disable_sp']) || empty($modSettings['sp_portal_mode']) || ((!empty($modSettings['sp_maintenance']) || !empty($maintenance)) && !allowedTo('admin_forum')) || isset($_GET['debug']) || (empty($modSettings['allow_guestAccess']) && $context['user']['is_guest']))
 	{
 		$context['disable_sp'] = true;
 		if ($standalone)
@@ -699,25 +731,42 @@ function sp_query_string($tourniquet)
 {
 	global $sportal_version, $context, $modSettings;
 
-	$fix = str_replace('{version}', $sportal_version, '<a href="http://www.web-develop.ca/" target="_blank" class="new_win">EhPortal {version} &copy; 2014, WebDev</a>');
+	$fix = str_replace('{version}', $sportal_version, '<a href="http://www.web-develop.ca/" target="_blank" class="new_win">EhPortal {version} &copy; 2015, WebDev</a>');
 
-	if ((SMF == 'SSI' && empty($context['standalone'])) || empty($context['template_layers']) || WIRELESS || empty($modSettings['sp_portal_mode']) || strpos($tourniquet, $fix) !== false)
+	$wirelessArray = array(
+		'is_iphone',
+		'is_android',
+		'is_blackberry',
+		'is_nokia',
+		'is_opera_mobi',
+		'is_opera_mini'
+	);
+	foreach ($wirelessArray as $wirelessType)
+		$sp_wireless = !empty($context['browser'][$wirelessType]) ? true : false;
+
+	if ((SMF == 'SSI' && empty($context['standalone'])) || empty($context['template_layers']) || $sp_wireless || empty($modSettings['sp_portal_mode']) || strpos($tourniquet, $fix) !== false)
 		return $tourniquet;
 
 	$finds = array(
+		'<li class="copyright">',
 		', Simple Machines LLC</a>',
 		'<span class="smalltext" style="display: inline; visibility: visible; font-family: Verdana, Arial, sans-serif;">',
 		'class="copywrite"',
 		'class="copyright"',
 	);
 	$replaces = array(
+		'<li class="copyright" style="line-height: 1em;">' . $fix . '</li>
+			<li class="copyright" style="line-height: 1em;">',
 		', Simple Machines LLC</a><br />' . $fix,
 		'<span class="smalltext" style="display: inline; visibility: visible; font-family: Verdana, Arial, sans-serif;">' . $fix . '<br />',
 		'class="copywrite" style="line-height: 1em;"',
 		'class="copyright" style="line-height: 1.5em;"',
 	);
 
-	$tourniquet = str_replace($finds, $replaces, $tourniquet);
+	if (strpos($tourniquet, $finds[0]) !== false)
+		$tourniquet = str_replace($finds[0], $replaces[0], $tourniquet);
+	else
+		$tourniquet = str_replace($finds, $replaces, $tourniquet);
 
 	if (strpos($tourniquet, $fix) === false)
 	{
@@ -1086,7 +1135,7 @@ function sportal_get_pages($page_id = null, $active = false, $allowed = false)
 		$request = $smcFunc['db_query']('','
 			SELECT
 				id_page, namespace, title, body, type, permission_set,
-				groups_allowed, groups_denied, views, style, status
+				groups_allowed, groups_denied, views, style, status, resize
 			FROM {db_prefix}sp_pages' . (!empty($query) ? '
 			WHERE ' . implode(' AND ', $query) : '') . '
 			ORDER BY title',
@@ -1110,6 +1159,7 @@ function sportal_get_pages($page_id = null, $active = false, $allowed = false)
 				'views' => $row['views'],
 				'style' => $row['style'],
 				'status' => $row['status'],
+				'resize' => $row['resize'],
 			);
 		}
 		$smcFunc['db_free_result']($request);
@@ -1429,7 +1479,7 @@ function sp_theme_copyright()
 
 	// define the version and copyright year
 	$forum_version = !empty($modSettings['smfVersion']) ? 'SMF ' . $modSettings['smfVersion'] : 'SMF 2.1';
-	$software_year = '2014';
+	$software_year = '2015';
 
 	// Put in the version...
 	$forum_copyright = sprintf($forum_copyright, $forum_version, $software_year);
@@ -1438,4 +1488,19 @@ function sp_theme_copyright()
 			<span class="smalltext" style="display: inline; visibility: visible; font-family: Verdana, Arial, sans-serif;">' . $forum_copyright . '
 			</span>';
 }
+
+function sp_page_url()
+{
+	$pageURL = 'http';
+	if ((!empty($_SERVER["HTTPS"])) && $_SERVER["HTTPS"] == "on")
+		$pageURL .= "s";
+	$pageURL .= "://";
+	if ($_SERVER["SERVER_PORT"] != "80")
+		$pageURL .= $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+	else
+		$pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+
+	return $pageURL;
+}
+
 ?>

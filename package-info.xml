@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
 <package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
-	<id>[napalm]:EhPortal</id>
+	<id>[ChenZhen]:EhPortal</id>
 	<name>EhPortal</name>
-	<version>1.0</version>
+	<version>1.1</version>
 	<type>modification</type>
 
 	<!-- Install actions -->
@@ -52,6 +52,7 @@
 		<require-file name="smf2.1/Themes/default/languages/SPortalHelp.english-utf8.php" destination="$languagedir" />
 
 		<!-- Image files -->
+		<require-file name="smf2.1/Themes/default/images/forum_icon.gif" destination="$imagesdir" />
 		<require-dir name="smf2.1/Themes/default/images/sp" destination="$imagesdir" />
 		<require-dir name="smf2.1/Themes/default/images/admin" destination="$imagesdir" />
 		<require-dir name="smf2.1/Themes/default/images/sp_shoutbox" destination="$imagesdir" />
@@ -62,12 +63,11 @@
 
 		<!-- JavaScript files -->
 		<require-file name="smf2.1/Themes/default/scripts/portal.js" destination="$themedir/scripts" />
-		<require-file name="smf2.1/Themes/default/scripts/ehportal.js" destination="$themedir/scripts" />
 
 		<!-- Install scripts -->
 		<database>smf2.1/install.php</database>
 
-		<redirect url="$scripturl?action=admin;area=portalconfig" timeout="5000">redirect.txt</redirect>
+		<redirect url="$scripturl?action=admin;area=portalconfig" timeout="5000" type="file" parsebbc="true">redirect.txt</redirect>
 	</install>
 
 	<!-- Uninstall actions -->
@@ -118,6 +118,7 @@
 		<!-- Image files -->
 		<remove-dir name="$imagesdir/sp" />
 		<remove-dir error="skip" name="$imagesdir/sp_shoutbox" />
+		<remove-file name="$imagesdir/forum_icon.gif" />
 		<remove-file name="$imagesdir/admin/configuration.png" />
 		<remove-file name="$imagesdir/admin/blocks.png" />
 		<remove-file name="$imagesdir/admin/articles.png" />
@@ -135,7 +136,6 @@
 
 		<!-- JavaScript files -->
 		<remove-file name="$themedir/scripts/portal.js" />
-		<remove-file name="$themedir/scripts/ehportal.js" />
 
 		<!-- Remove permission hook -->
 		<code>smf2.1/uninstall.php</code>

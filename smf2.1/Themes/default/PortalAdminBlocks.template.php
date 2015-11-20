@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0; PortalAdminBlocks
+// Version: 1.1; PortalAdminBlocks
 
 function template_block_list()
 {

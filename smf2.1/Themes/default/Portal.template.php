@@ -1,5 +1,5 @@
 <?php
-// Version: 1.0; Portal
+// Version: 1.1; Portal
 
 function template_portal_above()
 {
@@ -133,52 +133,10 @@ function template_block($block)
 	if (isset($txt['sp_custom_block_title_' . $block['id']]))
 		$block['label'] = $txt['sp_custom_block_title_' . $block['id']];
 
-	if ($context['SPortal']['core_compat'])
-		template_block_core($block);
-	else
-		template_block_curve($block);
+	template_block_default($block);
 }
 
-function template_block_core($block)
-{
-	global $context, $modSettings, $settings;
-
-	echo '
-			<div class="sp_block_section', isset($context['SPortal']['sides'][$block['column']]['last']) && $context['SPortal']['sides'][$block['column']]['last'] == $block['id'] && ($block['column'] != 2 || empty($modSettings['articleactive'])) ? '_last' : '', '">
-				<div class="', !empty($block['style']['no_body']) ? '' : ' tborder', '">
-					<table class="sp_block">';
-
-	if (empty($block['style']['no_title']))
-	{
-		echo '
-						<tr>
-							<td class="sp_block_padding ', $block['style']['title']['class'], '"', !empty($block['style']['title']['style']) ? ' style="' . $block['style']['title']['style'] . '"' : '', '>';
-
-		if (empty($block['force_view']))
-			echo '
-								<a class="sp_float_right_title" href="javascript:void(0);" onclick="sp_collapseBlock(\'', $block['id'], '\')"><span id="sp_collapse_', $block['id'], '" class="', ($block['collapsed'] ? 'toggle_down' : 'toggle_up'), '"></span></a>';
-
-		echo '
-								', parse_bbc($block['label']), '
-							</td>
-						</tr>';
-	}
-
-	echo '
-						<tr', (empty($block['force_view']) ? ' id="sp_block_' . $block['id'] . '"' : '') , $block['collapsed'] && empty($block['force_view']) && empty($block['style']['no_title']) ? ' style="display: none;"' : '', '>
-							<td class="sp_block_padding', ($block['type'] == 'sp_menu') ? '' : ' sp_block', empty($block['style']['body']['class']) ? '' : ' ' . $block['style']['body']['class'], '"', !empty($block['style']['body']['style']) ? ' style="' . $block['style']['body']['style'] . '"' : '', '>';
-
-	$block['type']($block['parameters'], $block['id']);
-
-	echo '
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>';
-}
-
-function template_block_curve($block)
+function template_block_default($block)
 {
 	global $context, $modSettings, $settings;
 
@@ -246,4 +204,5 @@ function template_block_curve($block)
 		</div>
 	</div>';
 }
+
 ?>
