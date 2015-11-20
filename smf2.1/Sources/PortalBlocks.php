@@ -1620,7 +1620,7 @@ function sp_news($parameters, $id, $return_parameters = false)
 									{
 										var ct = sp_override != "-1" ? parseInt(sp_override.replace("', $id,'_", "")) : ($("#sp_rotate" + sp_block_id).data("news") || 0);
 										$("#sp_rotate" + sp_block_id).data("news", ct == sp_news.length -1 ? 0 : ct + 1).html(sp_decodeHtml(sp_news[ct])).fadeIn().delay(sp_delay).fadeOut(sp_fade, sp_rotateNews);
-										', (!empty($bullets) ? '
+										', (!empty($bullets) && count($context['news_lines']) > 1 ? '
 										$("a").filter(function(){
 											var myId = this.id.match(/sp_news_nav_' . $id . '_*/);
 											return myId;
