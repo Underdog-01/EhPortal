@@ -613,7 +613,7 @@ if (empty($has_block))
 The use of jQuery libraries allows the SMF 2.1.X branch and EhPortal to take advantage of pre-written simple to use cross-browser Javascript functions that help ease their future development.</p>
 <p><strong>Easy Installation</strong>
 <br />
-EhPortal will always require you to uninstall any old versions first prior to the installation of newer releases. Your EhPortal dataabase settings, blocks and pages will always remain unless you opt to remove them when uninstalling.</p>
+EhPortal will always require you to uninstall any old versions first prior to the installation of newer releases. Your EhPortal database settings, blocks and pages will always remain unless you opt to remove them when uninstalling.</p>
 <p><strong>Theme Support</strong>
 <br />
 EhPortal takes advantage of SMF hooks where possible which should allow the use of it on a variety of themes without issue.</p>
