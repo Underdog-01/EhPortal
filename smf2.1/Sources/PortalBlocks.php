@@ -2082,7 +2082,8 @@ function sp_rssFeed($parameters, $id, $return_parameters = false)
 	}
 
 	$data = str_replace(array("\n", "\r", "\t"), '', $data);
-	$data = preg_replace_callback('~<\!\[CDATA\[(.+?)\]\]>~' . ($context['utf8'] ? 'u' : ''), create_function('$m', 'global $smcFunc; return "#cdata_escape_encode#" . $smcFunc["htmlspecialchars"]($m[1]);'), $data);
+	$data = preg_replace_callback('~<\!\[CDATA\[(.+?)\]\]>~' . ($context['utf8'] ? 'u' : ''), function($m) use ($smcFunc) {return "#cdata_escape_encode#" . $smcFunc["htmlspecialchars"]($m[1]);}, $data);
+	//$data = preg_replace_callback('~<\!\[CDATA\[(.+?)\]\]>~' . ($context['utf8'] ? 'u' : ''), create_function('$m', 'global $smcFunc; return "#cdata_escape_encode#" . $smcFunc["htmlspecialchars"]($m[1]);'), $data);
 
 	preg_match_all('~<item>(.+?)</item>~', $data, $items);
 
@@ -3651,10 +3652,10 @@ function sp_decode($str)
 	for(;;)
 	{
 		$p = strpos($ret, '&#', $p2+1);
-		if (!$p)
+		if ($p === false)
 		    break;
 		$p2 = strpos($ret, ';', $p);
-		if (!$p2)
+		if ($p2 === false)
 		    break;
 
 		if (substr($ret, $p+2, 1) == 'x')
