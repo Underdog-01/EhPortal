@@ -2,7 +2,7 @@
 // Version: 1.1; SPortal
 // Russian localization by GeorG, 0daliska and digger (c) http://simplemachines.ru
 
-global $scripturl, $context;
+global $scripturl;
 
 // General strings
 $txt['sp-forum'] = 'Форум';
@@ -119,7 +119,7 @@ $txt['error_sp_no_shop_found'] = 'У Вас нет установленных модификаций Магазина.'
 $txt['error_sp_no_arcade_found'] = 'У Вас нет установленных модификаций Аркад.';
 $txt['error_sp_no_stats_found'] = 'Статистика не найдена.';
 $txt['error_sp_page_not_found'] = 'Запрашиваемая Вами страница не найдена';
-$txt['error_sp_shoutbox_not_exist'] = $context['user']['is_admin'] ? 'Извините. Мини-чат, Вам, скорее всего, померещился.' : 'Извините, данный мини-чат не существует.';
+$txt['error_sp_shoutbox_not_exist'] = 'Этот мини-чат не существует.';
 $txt['error_sp_no_shoutbox'] = 'Еще не создано ни одного мини-чата.';
 $txt['error_sp_no_shoutbox_sp_moderator'] = 'Новый чат может быть создан <a href="%s">здесь</a>.';
 $txt['error_sp_no_shoutbox_normaluser'] = 'Новый чат не создан, попросите администратора создать его';
