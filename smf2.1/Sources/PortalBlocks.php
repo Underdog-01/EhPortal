@@ -1366,7 +1366,7 @@ function sp_boardNews($parameters, $id, $return_parameters = false)
 		{
 			if (($msgBody = cache_get_data('portalRecent' . $row['id_msg'], 90)) == null)
 			{
-				$msgBody = TruncateHTML::truncateChars($row['body'], $length, '');
+				$msgBody = truncateHtml($row['body'], $length, true);
 
 				if (!empty($modSettings['cache_enable']))
 				    cache_put_data('portalRecent' . $row['id_msg'], $msgBody, 90);
