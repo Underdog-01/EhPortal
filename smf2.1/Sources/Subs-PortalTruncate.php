@@ -14,368 +14,114 @@
 if (!defined('SMF'))
 	die('Hacking attempt...');
 
-/**
- * Truncates HTML text retaining tags and formatting.
- * See http://www.pjgalbraith.com/2011/11/truncating-text-html-with-php/ for related blog post.
- *
- * Example:
- *
- * $output = TruncateHTML::truncateChars($your_html, '40', '...');
- * $output = TruncateHTML::truncateWords($your_html, '7', '...');
- *
- * @author pjgalbraith http://www.pjgalbraith.com
- *
- */
-
-/*
-    Copyright (c) 2011 Patrick Galbraith (http://www.pjgalbraith.com).
-    All rights reserved.
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
-*/
-
-class TruncateHTML {
-
-    public static function truncateChars($html, $limit, $ellipsis = '...') {
-
-	if($limit <= 0 || $limit >= strlen(strip_tags($html)))
-	    return $html;
-
-	$dom = new DOMDocument();
-	$dom->loadHTML($html);
-
-	$body = $dom->getElementsByTagName("body")->item(0);
-
-	$it = new DOMLettersIterator($body);
-
-	foreach($it as $letter) {
-	    if($it->key() >= $limit) {
-		$currentText = $it->currentTextPosition();
-		$currentText[0]->nodeValue = substr($currentText[0]->nodeValue, 0, $currentText[1] + 1);
-		self::removeProceedingNodes($currentText[0], $body);
-		self::insertEllipsis($currentText[0], $ellipsis);
-		break;
-	    }
-	}
-
-	return preg_replace('~<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>\s*~i', '', $dom->saveHTML());
-    }
-
-    public static function truncateWords($html, $limit, $ellipsis = '...') {
-
-	if($limit <= 0 || $limit >= self::countWords(strip_tags($html)))
-	    return $html;
-
-	$dom = new DOMDocument();
-	$dom->loadHTML($html);
-
-	$body = $dom->getElementsByTagName("body")->item(0);
-
-	$it = new DOMWordsIterator($body);
-
-	foreach($it as $word) {
-	    if($it->key() >= $limit) {
-		$currentWordPosition = $it->currentWordPosition();
-		$curNode = $currentWordPosition[0];
-		$offset = $currentWordPosition[1];
-		$words = $currentWordPosition[2];
-
-		$curNode->nodeValue = substr($curNode->nodeValue, 0, $words[$offset][1] + strlen($words[$offset][0]));
-
-		self::removeProceedingNodes($curNode, $body);
-		self::insertEllipsis($curNode, $ellipsis);
-		break;
-	    }
-	}
-
-	return preg_replace('~<(?:!DOCTYPE|/?(?:html|head|body))[^>]*>\s*~i', '', $dom->saveHTML());
-    }
-
-    private static function removeProceedingNodes(DOMNode $domNode, DOMNode $topNode) {
-	$nextNode = $domNode->nextSibling;
-
-	if($nextNode !== NULL) {
-	    self::removeProceedingNodes($nextNode, $topNode);
-	    $domNode->parentNode->removeChild($nextNode);
-	} else {
-	    //scan upwards till we find a sibling
-	    $curNode = $domNode->parentNode;
-	    while($curNode !== $topNode) {
-		if($curNode->nextSibling !== NULL) {
-		    $curNode = $curNode->nextSibling;
-		    self::removeProceedingNodes($curNode, $topNode);
-		    $curNode->parentNode->removeChild($curNode);
-		    break;
-		}
-		$curNode = $curNode->parentNode;
-	    }
-	}
-    }
-
-    private static function insertEllipsis(DOMNode $domNode, $ellipsis) {
-	$avoid = array('a', 'strong', 'em', 'h1', 'h2', 'h3', 'h4', 'h5'); //html tags to avoid appending the ellipsis to
-
-	if( in_array($domNode->parentNode->nodeName, $avoid) && $domNode->parentNode->parentNode !== NULL) {
-	    // Append as text node to parent instead
-	    $textNode = new DOMText($ellipsis);
-
-	    if($domNode->parentNode->parentNode->nextSibling)
-		$domNode->parentNode->parentNode->insertBefore($textNode, $domNode->parentNode->parentNode->nextSibling);
-	    else
-		$domNode->parentNode->parentNode->appendChild($textNode);
-	} else {
-	    // Append to current node
-	    $domNode->nodeValue = rtrim($domNode->nodeValue).$ellipsis;
-	}
-    }
-
-    private static function countWords($text) {
-	$words = preg_split("/[\n\r\t ]+/", $text, -1, PREG_SPLIT_NO_EMPTY);
-	return count($words);
-    }
-
-}
-
-/**
- * Iterates individual words of DOM text and CDATA nodes
- * while keeping track of their position in the document.
- *
- * Example:
- *
- *  $doc = new DOMDocument();
- *  $doc->load('example.xml');
- *  foreach(new DOMWordsIterator($doc) as $word) echo $word;
- *
- * @author pjgalbraith http://www.pjgalbraith.com
- * @author porneL http://pornel.net (based on DOMLettersIterator available at http://pornel.net/source/domlettersiterator.php)
- * @license Public Domain
- *
- */
-
-final class DOMWordsIterator implements Iterator {
-
-    private $start, $current;
-    private $offset, $key, $words;
-
-    /**
-     * expects DOMElement or DOMDocument (see DOMDocument::load and DOMDocument::loadHTML)
-     */
-    function __construct(DOMNode $el)
-    {
-	if ($el instanceof DOMDocument) $this->start = $el->documentElement;
-	else if ($el instanceof DOMElement) $this->start = $el;
-	else throw new InvalidArgumentException("Invalid arguments, expected DOMElement or DOMDocument");
-    }
-
-    /**
-     * Returns position in text as DOMText node and character offset.
-     * (it's NOT a byte offset, you must use mb_substr() or similar to use this offset properly).
-     * node may be NULL if iterator has finished.
-     *
-     * @return array
-     */
-    function currentWordPosition()
-    {
-	return array($this->current, $this->offset, $this->words);
-    }
-
-    /**
-     * Returns DOMElement that is currently being iterated or NULL if iterator has finished.
-     *
-     * @return DOMElement
-     */
-    function currentElement()
-    {
-	return $this->current ? $this->current->parentNode : NULL;
-    }
-
-    // Implementation of Iterator interface
-    function key()
-    {
-	return $this->key;
-    }
-
-    function next()
-    {
-	if (!$this->current) return;
-
-	if ($this->current->nodeType == XML_TEXT_NODE || $this->current->nodeType == XML_CDATA_SECTION_NODE)
-	{
-	    if ($this->offset == -1)
-	    {
-		$this->words = preg_split("/[\n\r\t ]+/", $this->current->textContent, -1, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_OFFSET_CAPTURE);
-	    }
-	    $this->offset++;
-
-	    if ($this->offset < count($this->words)) {
-		$this->key++;
-		return;
-	    }
-	    $this->offset = -1;
-	}
-
-	while($this->current->nodeType == XML_ELEMENT_NODE && $this->current->firstChild)
-	{
-	    $this->current = $this->current->firstChild;
-	    if ($this->current->nodeType == XML_TEXT_NODE || $this->current->nodeType == XML_CDATA_SECTION_NODE) return $this->next();
-	}
-
-	while(!$this->current->nextSibling && $this->current->parentNode)
-	{
-	    $this->current = $this->current->parentNode;
-	    if ($this->current === $this->start) {$this->current = NULL; return;}
-	}
-
-	$this->current = $this->current->nextSibling;
-
-	return $this->next();
-    }
-
-    function current()
-    {
-	if ($this->current) return $this->words[$this->offset][0];
-	return NULL;
-    }
-
-    function valid()
-    {
-	return !!$this->current;
-    }
-
-    function rewind()
-    {
-	$this->offset = -1; $this->words = array();
-	$this->current = $this->start;
-	$this->next();
-    }
-}
-
-/**
- * Iterates individual characters (Unicode codepoints) of DOM text and CDATA nodes
- * while keeping track of their position in the document.
- *
- * Example:
- *
- *  $doc = new DOMDocument();
- *  $doc->load('example.xml');
- *  foreach(new DOMLettersIterator($doc) as $letter) echo $letter;
- *
- * NB: If you only need characters without their position
- *     in the document, use DOMNode->textContent instead.
- *
- * @author porneL http://pornel.net
- * @license Public Domain
- *
- */
-final class DOMLettersIterator implements Iterator
+function truncateHtml($text, $length, $considerHtml)
 {
-    private $start, $current;
-    private $offset, $key, $letters;
+	list($ending, $exact) = array('...', false);
 
-    /**
-     * expects DOMElement or DOMDocument (see DOMDocument::load and DOMDocument::loadHTML)
-     */
-    function __construct(DOMNode $el)
-    {
-	if ($el instanceof DOMDocument) $this->start = $el->documentElement;
-	else if ($el instanceof DOMElement) $this->start = $el;
-	else throw new InvalidArgumentException("Invalid arguments, expected DOMElement or DOMDocument");
-    }
-
-    /**
-     * Returns position in text as DOMText node and character offset.
-     * (it's NOT a byte offset, you must use mb_substr() or similar to use this offset properly).
-     * node may be NULL if iterator has finished.
-     *
-     * @return array
-     */
-    function currentTextPosition()
-    {
-	return array($this->current, $this->offset);
-    }
-
-    /**
-     * Returns DOMElement that is currently being iterated or NULL if iterator has finished.
-     *
-     * @return DOMElement
-     */
-    function currentElement()
-    {
-	return $this->current ? $this->current->parentNode : NULL;
-    }
-
-    // Implementation of Iterator interface
-    function key()
-    {
-	return $this->key;
-    }
-
-    function next()
-    {
-	if (!$this->current) return;
-
-	if ($this->current->nodeType == XML_TEXT_NODE || $this->current->nodeType == XML_CDATA_SECTION_NODE)
+	if ($considerHtml)
 	{
-	    if ($this->offset == -1)
-	    {
-		// fastest way to get individual Unicode chars and does not require mb_* functions
-		preg_match_all('/./us',$this->current->textContent,$m); $this->letters = $m[0];
-	    }
-	    $this->offset++; $this->key++;
-	    if ($this->offset < count($this->letters)) return;
-	    $this->offset = -1;
-	}
+		// if the plain text is shorter than the maximum length, return the whole text
+		/*  if (strlen(preg_replace('/<.*?>/', '', $text)) <= $length) */
+		if (strlen(strip_tags($text)) <= $length)
+			return $text;
 
-	while($this->current->nodeType == XML_ELEMENT_NODE && $this->current->firstChild)
+		// splits all html-tags to scannable lines
+		preg_match_all('/(<.+?>)?([^<>]*)/s', $text, $lines, PREG_SET_ORDER);
+		$total_length = strlen($ending);
+		$open_tags = array();
+		$truncate = '';
+		foreach ($lines as $line_matchings)
+		{
+			// if there is any html-tag in this line, handle it and add it (uncounted) to the output
+			if (!empty($line_matchings[1]))
+			{
+				// if it's an "empty element" with or without xhtml-conform closing slash
+				if (preg_match('/^<(\s*.+?\/\s*|\s*(img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param)(\s.+?)?)>$/is', $line_matchings[1]))
+				{
+					// do nothing
+					// if tag is a closing tag
+				}
+				elseif (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings))
+				{
+					// delete tag from $open_tags list
+					$pos = array_search($tag_matchings[1], $open_tags);
+					if ($pos !== false)
+						unset($open_tags[$pos]);
+					// if tag is an opening tag
+				}
+				elseif (preg_match('/^<\s*([^\s>!]+).*?>$/s', $line_matchings[1], $tag_matchings))
+				{
+					// add tag to the beginning of $open_tags list
+					array_unshift($open_tags, strtolower($tag_matchings[1]));
+				}
+				// add html-tag to $truncate'd text
+				$truncate .= $line_matchings[1];
+			}
+			// calculate the length of the plain text part of the line; handle entities as one character
+			$content_length = strlen(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
+			if ($total_length+$content_length> $length)
+			{
+				// the number of characters which are left
+				$left = $length - $total_length;
+				$entities_length = 0;
+				// search for html entities
+				if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, PREG_OFFSET_CAPTURE))
+				{
+					// calculate the real length of all entities in the legal range
+					foreach ($entities[0] as $entity)
+					{
+						if ($entity[1]+1-$entities_length <= $left)
+						{
+							$left--;
+							$entities_length += strlen($entity[0]);
+						}
+						else
+						{
+							// no more characters left
+							break;
+						}
+					}
+				}
+				$truncate .= substr($line_matchings[2], 0, $left+$entities_length);
+				// maximum lenght is reached, so get off the loop
+				break;
+			}
+			else
+			{
+				$truncate .= $line_matchings[2];
+				$total_length += $content_length;
+			}
+			// if the maximum length is reached, get off the loop
+			if($total_length>= $length)
+				break;
+		}
+	}
+	else
 	{
-	    $this->current = $this->current->firstChild;
-	    if ($this->current->nodeType == XML_TEXT_NODE || $this->current->nodeType == XML_CDATA_SECTION_NODE) return $this->next();
+		if (strlen($text) <= $length)
+			return $text;
+		else
+			$truncate = substr($text, 0, $length - strlen($ending));
 	}
-
-	while(!$this->current->nextSibling && $this->current->parentNode)
+	// if the words shouldn't be cut in the middle...
+	if (!$exact)
 	{
-	    $this->current = $this->current->parentNode;
-	    if ($this->current === $this->start) {$this->current = NULL; return;}
+		// ...search the last occurance of a space...
+		$spacepos = strrpos($truncate, ' ');
+		if (isset($spacepos))
+		{
+			// ...and cut the text in this position
+			$truncate = substr($truncate, 0, $spacepos);
+		}
 	}
-
-	$this->current = $this->current->nextSibling;
-
-	return $this->next();
-    }
-
-    function current()
-    {
-	if ($this->current) return $this->letters[$this->offset];
-	return NULL;
-    }
-
-    function valid()
-    {
-	return !!$this->current;
-    }
-
-    function rewind()
-    {
-	$this->offset = -1; $this->letters = array();
-	$this->current = $this->start;
-	$this->next();
-    }
+	// add the defined ending to the text
+	if($considerHtml)
+	{
+		// close all unclosed html-tags
+		foreach ($open_tags as $tag)
+			$truncate .= '</' . $tag . '>';
+	}
+	return $truncate;
 }
 
 ?>
