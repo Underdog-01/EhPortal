@@ -334,7 +334,7 @@ function sportal_initialize(&$no_stat_actions)
 		return;
 	elseif (empty($modSettings['allow_guestAccess']) && $user_info['is_guest'] && (!isset($_REQUEST['action']) || !in_array($_REQUEST['action'], array('coppa', 'login', 'login2', 'register', 'register2', 'reminder', 'activate', 'help', 'helpadmin', 'smstats', 'verificationcode', 'signup', 'signup2'))))
 		return;
-	elseif (empty($_REQUEST['action']))
+	elseif (empty($_REQUEST['action']) || (!empty($_GET['page']) && $_REQUEST['action'] == 'portal'))
 	{
 		$sp_action = sportal_catch_action();
 		//sp_theme_copyright();
