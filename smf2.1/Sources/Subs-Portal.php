@@ -1492,9 +1492,13 @@ function sp_theme_copyright()
 function sp_page_url()
 {
 	$pageURL = 'http';
-	if ((!empty($_SERVER["HTTPS"])) && $_SERVER["HTTPS"] == "on")
-		$pageURL .= "s";
-	$pageURL .= "://";
+	if ((!empty($_SERVER["HTTPS"])) && $_SERVER["HTTPS"] !== "off")
+		$pageURL .= "s://";
+	elseif ($_SERVER['SERVER_PORT'] == 443)
+		$pageURL .= "s://";
+	else
+		$pageURL .= "://";
+
 	if ($_SERVER["SERVER_PORT"] != "80")
 		$pageURL .= $_SERVER["SERVER_NAME"] . ':' . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
 	else
@@ -1502,5 +1506,4 @@ function sp_page_url()
 
 	return $pageURL;
 }
-
 ?>
