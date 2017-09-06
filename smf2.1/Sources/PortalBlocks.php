@@ -1634,7 +1634,7 @@ function sp_news($parameters, $id, $return_parameters = false)
 	}
 	elseif (!empty($context['random_news_line']))
 		echo '
-								<div class="sp_center sp_fullwidth">', stripslashes(htmlspecialchars($context['random_news_line'])), '</div>';
+								<div class="sp_center sp_fullwidth">', htmlspecialchars_decode(stripslashes(htmlspecialchars($context['random_news_line']))), '</div>';
 }
 
 function sp_attachmentImage($parameters, $id, $return_parameters = false)
