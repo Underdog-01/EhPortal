@@ -93,7 +93,7 @@ function sportal_init($standalone = false)
 	$sportal_version = '1.1';
 
 	if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'dlattach')
-		return;	
+		return;
 
 	// Some variables for ease.
 	$action = !empty($context['current_action']) ? $context['current_action'] : '';
@@ -102,7 +102,7 @@ function sportal_init($standalone = false)
 	$topic = !empty($context['current_topic']) ? 't' . $context['current_topic'] : '';
 	$page = !empty($_REQUEST['page']) ? $_REQUEST['page'] : '';
 	$portal = (empty($action) && empty($sub_action) && empty($board) && empty($topic) && SMF != 'SSI' && $modSettings['sp_portal_mode'] == 1) || $action == 'portal' || !empty($context['standalone']) ? true : false;
-	
+
 	if (sp_page_url() === $boardurl . '/' || sp_page_url() === $boardurl || strpos(sp_page_url(), $scripturl . '?action=portal;') !== false)
 		redirectexit($scripturl . '?action=portal');
 	elseif ($portal && empty($page))
