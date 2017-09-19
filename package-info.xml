@@ -50,6 +50,12 @@
 		<require-file name="smf2.1/Themes/default/languages/SPortalAdmin.english-utf8.php" destination="$languagedir" />
 		<require-file name="smf2.1/Themes/default/languages/SPortalHelp.english.php" destination="$languagedir" />
 		<require-file name="smf2.1/Themes/default/languages/SPortalHelp.english-utf8.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortal.russian.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortal.russian-utf8.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalAdmin.russian.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalAdmin.russian-utf8.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalHelp.russian.php" destination="$languagedir" />
+		<require-file name="smf2.1/Themes/default/languages/SPortalHelp.russian-utf8.php" destination="$languagedir" />
 
 		<!-- Image files -->
 		<require-file name="smf2.1/Themes/default/images/forum_icon.gif" destination="$imagesdir" />
@@ -114,6 +120,12 @@
 		<remove-file name="$languagedir/SPortalAdmin.english-utf8.php" />
 		<remove-file name="$languagedir/SPortalHelp.english.php" />
 		<remove-file name="$languagedir/SPortalHelp.english-utf8.php" />
+		<remove-file name="$languagedir/SPortal.russian.php" />
+		<remove-file name="$languagedir/SPortal.russian-utf8.php" />
+		<remove-file name="$languagedir/SPortalAdmin.russian.php" />
+		<remove-file name="$languagedir/SPortalAdmin.russian-utf8.php" />
+		<remove-file name="$languagedir/SPortalHelp.russian.php" />
+		<remove-file name="$languagedir/SPortalHelp.russian-utf8.php" />
 
 		<!-- Image files -->
 		<remove-dir name="$imagesdir/sp" />
